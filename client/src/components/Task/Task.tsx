@@ -2,6 +2,7 @@ import React, {FormEvent, useContext, useState} from "react";
 import TaskForm from "../TaskForm/TaskForm";
 
 import './Task.scss';
+import editIcon from './edit.svg'
 import {AppContext} from "../../context";
 
 export type StateTask = {
@@ -25,7 +26,6 @@ export interface TaskWrapperProps extends TaskProps {
     task: FullStateTask
 }
 const Task = ({index, showMarked, removeTask, task, className} : TaskProps) => {
-
     return (
         <div className={className ? `task ${className}` : "task"}>
             <input className="task_checker"
@@ -37,6 +37,7 @@ const Task = ({index, showMarked, removeTask, task, className} : TaskProps) => {
             />
             <label htmlFor={`${className ? 'sub' : ''}task_checker-${index}`}/>
             <p>{task.taskName}</p>
+            <button className="edit"><img src={editIcon} alt="edit"/></button>
             <button className="destroy" onClick={removeTask}></button>
         </div>
     )
@@ -95,8 +96,8 @@ const Subtasks = ({subtasks, addSubTask, taskId}: SubtasksProps) => {
             })}
             <TaskForm
                 inputValue={inputValue}
-                addTask={addTask}
-                onChange={(e) => setInputValue(e.currentTarget.value)}
+                onSubmit={addTask}
+                onChange={setInputValue}
                 className={'subtaskInput'}
             />
         </div>

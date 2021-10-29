@@ -75,6 +75,15 @@
   }
 }
 
+.edit {
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border: none;
+  position: absolute;
+  right: 50px;
+  top: 35%;
+}
 .destroy{
   visibility: hidden;
   width: 30px;

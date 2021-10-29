@@ -1,0 +1,35 @@
+.auth {
+  max-width: 573px;
+
+  &-buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &-button {
+    border: none;
+    background-color: #0b76ef;
+    border-radius: 10px;
+    padding: 10px 20px;
+
+    color: white;
+    font-size: 1.2rem;
+  }
+
+  &-form {
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+  }
+
+  &-input {
+    margin-bottom: 10px;
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-size: 1.2rem
+  }
+}
+
+.submit {
+  margin-bottom: 10px;
+}

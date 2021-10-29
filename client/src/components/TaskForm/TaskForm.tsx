@@ -2,20 +2,20 @@ import React, {ChangeEvent, FormEvent} from "react";
 import './TaskForm.scss'
 export interface TaskFormProps {
     inputValue: string
-    addTask: (e: FormEvent<HTMLFormElement>) => void
-    onChange: (e: ChangeEvent<HTMLInputElement>) => void
+    onSubmit: (e: FormEvent<HTMLFormElement>) => void
+    onChange: (value: string) => void
     className?: string
 }
 
-const TaskForm = ({inputValue, addTask, onChange, className}: TaskFormProps) => {
+const TaskForm = ({inputValue, onSubmit, onChange, className}: TaskFormProps) => {
     return (
-        <form onSubmit={addTask} onClick={e => e.stopPropagation()} className={className === 'subtaskInput' ? 'subForm' : ''}>
+        <form onSubmit={onSubmit} onClick={e => e.stopPropagation()} className={className === 'subtaskInput' ? 'subForm' : ''}>
             <input
                 id="taskInput"
-                className={className || ''}
+                className={`inputs ${className || ''}`}
                 type="text"
                 autoComplete="off"
-                onChange={onChange}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e.currentTarget.value)}
                 value={inputValue}
                 placeholder="What need to be done?"
                 maxLength={18}

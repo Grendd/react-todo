@@ -1,0 +1,5 @@
+{
+  "port": 5000,
+  "JWtoken": "mister sisters todo_react",
+  "mongoUri": "mongodb+srv://user:1234@cluster0.pogal.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+}

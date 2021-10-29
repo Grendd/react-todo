@@ -1,5 +1,4 @@
-import Task from "./TaskProto.js";
-import {json} from "express";
+import Task from "./models/Task.js";
 
 class TackController{
     async create(req, res){

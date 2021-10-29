@@ -1,19 +1,21 @@
-import express from 'express'
 import cors from 'cors';
-import mongoose from 'mongoose'
-import router from "./router.js";
+import express from 'express';
+import mongoose from 'mongoose';
+import config from 'config';
 
-const PORT = 5000
-const DB_URL = 'mongodb+srv://user:1234@cluster0.pogal.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
-const app = express()
+import router from "./routes/index.js";
 
-app.use(cors())
-app.use(express.json())
-app.use('/api', router)
+const PORT = config.get('port') || 5000;
+
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+app.use('/api', router);
 
 async function startApp() {
     try {
-        await mongoose.connect(DB_URL,  { useUnifiedTopology: true, useNewUrlParser: true })
+        await mongoose.connect(config.get('mongoUri'),  { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true })
         app.listen(PORT, () => console.log("Server started on port: " + PORT))
     } catch (e) {
         console.log(e)
