@@ -1,14 +1,14 @@
-import React, {FormEvent, useEffect, useState} from "react";
+import React, {FormEvent, useContext, useEffect, useState} from "react";
 import TaskWrapper, {FullStateTask, StateTask} from "../Task/Task";
 import {taskApiDelete, taskApiGetAll, taskApiPost, taskApiUpdate} from "../../api/taskApi";
-import {AppContext} from "../../context";
+import {AppContext, ToDoContext} from "../../context";
 import TaskForm from "../TaskForm/TaskForm";
 import FilterGroup from "../FilterGroup/FilterGroup";
 import {TaskFilter} from "../App/App";
-
 import './Todos.scss'
 
 const ToDos = () => {
+    const {userId} = useContext(AppContext)
     const [inputValue, setInputValue] = useState<string>('');
     const [filterValue, setFilterValue] = useState<TaskFilter>('all');
     const [tasks, setTasks] = useState<FullStateTask[]>([]);
@@ -21,13 +21,16 @@ const ToDos = () => {
     }
     const addTask = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        taskApiPost({taskName: inputValue, completed: false, id: (new Date).toString(), subtasks: []})
+        taskApiPost({taskName: inputValue, completed: false, id: (new Date).toString(), subtasks: [], owner: userId})
         setTasks([...tasks, {taskName: inputValue, completed: false, id: (new Date).toString(), subtasks: []}]);
         setInputValue('');
     }
 
     const changeStatus = (task: FullStateTask) => {
         task.completed = !task.completed
+        task.subtasks.map(subtask => {
+            subtask.completed = task.completed;
+        })
         taskApiUpdate(task)
         setTasks([...tasks])
     }
@@ -50,7 +53,7 @@ const ToDos = () => {
     }
 
     useEffect(() => {
-        taskApiGetAll().then(
+        taskApiGetAll(userId).then(
             (result) => {
                 setTasks(result)
             },
@@ -58,9 +61,9 @@ const ToDos = () => {
                 console.log("ERROR:" + error)
             }
         )
-    }, [])
+    }, [userId])
     return (
-        <AppContext.Provider value={{ filter: filterValue}}>
+        <ToDoContext.Provider value={{ filter: filterValue}}>
             <TaskForm
                 onSubmit={addTask}
                 inputValue={inputValue}
@@ -83,7 +86,7 @@ const ToDos = () => {
             </div>
 
             <FilterGroup onClick={setFilterValue} currStatus={filterValue}/>
-        </AppContext.Provider>
+        </ToDoContext.Provider>
     )
 }
 

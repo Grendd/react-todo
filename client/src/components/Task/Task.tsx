@@ -1,9 +1,9 @@
-import React, {FormEvent, useContext, useState} from "react";
+import React, {FormEvent, ChangeEvent, useContext, useState} from "react";
 import TaskForm from "../TaskForm/TaskForm";
 
 import './Task.scss';
 import editIcon from './edit.svg'
-import {AppContext} from "../../context";
+import {ToDoContext} from "../../context";
 
 export type StateTask = {
     taskName: string
@@ -16,7 +16,7 @@ export interface FullStateTask extends StateTask {
 
 export interface TaskProps {
     index: number;
-    showMarked: () => void;
+    showMarked: (e: ChangeEvent<HTMLInputElement>) => void;
     removeTask: () => void;
     task: StateTask
     className?: string;
@@ -29,16 +29,15 @@ const Task = ({index, showMarked, removeTask, task, className} : TaskProps) => {
     return (
         <div className={className ? `task ${className}` : "task"}>
             <input className="task_checker"
-                   id={`${className ? 'sub' : ''}task_checker-${index}`}
+                   id={`${className ? 'sub' : ''}task_checker-${task.taskName}-${index}`}
                    type="checkbox"
-                   name={`${className ? 'sub' : ''}task_checker-${index}`}
+                   name={`${className ? 'sub' : ''}task_checker-${task.taskName}-${index}`}
                    onChange={showMarked}
                    checked={task.completed}
             />
-            <label htmlFor={`${className ? 'sub' : ''}task_checker-${index}`}/>
+            <label htmlFor={`${className ? 'sub' : ''}task_checker-${task.taskName}-${index}`}/>
             <p>{task.taskName}</p>
-            <button className="edit"><img src={editIcon} alt="edit"/></button>
-            <button className="destroy" onClick={removeTask}></button>
+            <button className="destroy" onClick={removeTask}/>
         </div>
     )
 }
@@ -49,7 +48,7 @@ interface SubtasksProps {
 }
 
 const Subtasks = ({subtasks, addSubTask, taskId}: SubtasksProps) => {
-    const {filter} = useContext(AppContext)
+    const {filter} = useContext(ToDoContext)
     const [inputValue, setInputValue] = useState<string>('');
 
     const addTask = (e: FormEvent<HTMLFormElement>) => {
@@ -90,7 +89,7 @@ const Subtasks = ({subtasks, addSubTask, taskId}: SubtasksProps) => {
                         removeTask={removeTask.bind(this, task)}
                         task={task}
                         className={'subtask'}
-                        key={`task-${index}`}
+                        key={`task-${task.taskName}-${index}`}
                     />
                 )
             })}
@@ -107,11 +106,15 @@ const Subtasks = ({subtasks, addSubTask, taskId}: SubtasksProps) => {
 const TaskWrapper = (props: TaskWrapperProps) => {
     const [isOpened, setIsOpened] = useState<boolean>(false);
     const clickOpenTask = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (String(e.target) === "[object HTMLLabelElement]" || String(e.target) === "[object HTMLInputElement]") {
+            return;
+        }
         e.currentTarget.classList.toggle('opened')
+        e.currentTarget.classList.toggle('closed')
         setIsOpened(!isOpened);
     }
     return (
-        <div className="task_wrapper" key={props.index} onClick={clickOpenTask}>
+        <div className="task_wrapper closed" key={props.index} onClick={clickOpenTask}>
             <Task {...props}/>
             {isOpened && <Subtasks subtasks={props.task.subtasks || []} addSubTask={props.addSubTask} taskId={props.task.id}/>}
         </div>

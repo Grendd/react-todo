@@ -1,7 +1,13 @@
 .taskInput {
   font-size: 2rem;
   box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.5);
-  padding: 16px 120px;
+  padding: 16px 20px;
+  width: 100%;
+}
+@media (max-width: 399px) {
+  .taskInput {
+    font-size: 1.5rem !important;
+  }
 }
 .tasks{
   border-top: 1px solid #e6e6e6;

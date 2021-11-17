@@ -1,10 +1,12 @@
-import React, {ChangeEvent, FormEvent, useState} from 'react';
+import React, {ChangeEvent, FormEvent, useContext, useState} from 'react';
 import {registerApi, loginApi} from "../../api/authApi";
 import Error from "../Error/Error";
+
 import './Authorization.scss'
+import {AppContext} from "../../context";
 
 interface AuthInputProps {
-    onChange: (value: string) => void;
+    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
     value: string;
     isPass?: boolean;
     placeholder?: string;
@@ -14,18 +16,18 @@ const AuthInput = ({onChange, value, className, placeholder, isPass = false}: Au
 
     return (
         <input
+            name={isPass ? 'password' : 'email'}
             className={className || ''}
             type={isPass ? "password" : "text"}
             autoComplete="off"
-            onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e.currentTarget.value)}
+            onChange={onChange}
             value={value}
             placeholder={placeholder || ''}
-            maxLength={18}
+            maxLength={40}
         />
     )
 }
 
-type FormType = 'subtaskInput' | '';
 type AuthTypes = 'register' | 'login';
 
 
@@ -38,42 +40,40 @@ interface SignInOrUpProps {
     setIsLogined: (state: boolean) => void
 }
 
+interface FormType {
+    email: string
+    password: string
+}
 const AuthForm = ({setIsLogined, authType}: AuthFormProps) => {
-    const [loginValue, setLoginValue] = useState<string>('');
-    const [passValue, setPassValue] = useState<string>('');
+    const [form, setForm] = useState<FormType>({email: '', password: ''});
     const [error, setError] = useState<string>('')
+    const auth = useContext(AppContext)
+
     const onSubmit = async(e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        setLoginValue('')
-        setPassValue('')
-        if (authType === 'register') {
-            const {data, status} = await registerApi({email: loginValue, password: passValue})
-            if (status >= 500) {
-                setError('Server not available')
-            }
-            if (status >= 400) {
-                setError(data.message)
-            }
-            if (status >= 200) {
-                console.log(data)
-            }
-        } else {
-            const {data, status} = await loginApi({email: loginValue, password: passValue})
-            if (status >= 500) {
-                setError('Server not available')
-            }
-            if (status >= 400) {
-                setError(data.message)
-            }
-            if (status >= 200) {
-                console.log(data)
-            }
+        const {data, status} = authType === 'register' ? await registerApi(form) :
+            await loginApi(form);
+        if (status >= 500) {
+            setError('Server not available')
+        }
+        if (status >= 400 && status < 500) {
+            setError(data.message)
+        }
+        if (status >= 200 && status < 300) {
+            setIsLogined(true)
+            auth.login(data.token, data.userId)
+        }
+        setForm({email: '', password: ''})
+    }
+    const onChangeInput = (form: FormType, onChange: (data: FormType) => void) => {
+        return (e: ChangeEvent<HTMLInputElement>) => {
+            onChange({...form, [e.target.name]: e.target.value})
         }
     }
     return (
         <form onSubmit={onSubmit} onClick={e => e.stopPropagation()} className={'auth-form'}>
-            <AuthInput onChange={setLoginValue} value={loginValue} className='inputs auth-input' placeholder={'Login'}/>
-            <AuthInput onChange={setPassValue} value={passValue} className='inputs auth-input' placeholder={'Password'}/>
+            <AuthInput onChange={onChangeInput(form, setForm)} value={form.email} className='inputs auth-input' placeholder={'Login'}/>
+            <AuthInput onChange={onChangeInput(form, setForm)} value={form.password} className='inputs auth-input' placeholder={'Password'} isPass/>
             <input type="submit" className='auth-button submit'/>
             {error && <Error message={error}/>}
         </form>

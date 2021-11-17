@@ -3,8 +3,8 @@ import Task from "./models/Task.js";
 class TackController{
     async create(req, res){
         try {
-            const {id, taskName, completed} = req.body
-            const task = await Task.create({id, taskName, completed})
+            const {id, taskName, completed, owner} = req.body
+            const task = await Task.create({id, taskName, completed, owner})
             res.json(task)
         } catch (e) {
             res.status(500).json(e)
@@ -12,9 +12,10 @@ class TackController{
     }
     async getAll(req, res){
         try {
-            const tasks = await Task.find()
+            const tasks = await Task.find({ owner: req.body.user.userId})
             return (res.json(tasks))
         } catch (e) {
+            console.log(e)
             res.status(500).json(e)
         }
     }

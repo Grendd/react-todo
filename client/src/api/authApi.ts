@@ -22,7 +22,6 @@ export const registerApi = async(data : object) => {
             'Content-type': 'application/json; charset=UTF-8',
         },
     })
-    console.log(res)
     return {
         data: await res.json(),
         status: res.status

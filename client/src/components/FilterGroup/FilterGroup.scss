@@ -7,6 +7,7 @@
   border-top: 1px solid #e6e6e6;
   background-color: white;
   justify-content: center;
+  position: relative;
 
   button{
     background: none;
@@ -21,6 +22,13 @@
       color: sandybrown !important;
     }
   }
+}
+.tasks_controller .exit {
+  position: absolute;
+  right: 5%;
+}
+.tasks_controller .exit:hover {
+  color: orangered;
 }
 
 .choosed {

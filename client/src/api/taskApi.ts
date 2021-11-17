@@ -1,17 +1,23 @@
 import config from "../config/default";
 
-export const taskApiGetAll = () => {
+export const taskApiGetAll = (userId: string | null) => {
    return fetch(`${config.apiAdress}/api/tasks`, {
-        method: "GET",
+        method: 'POST',
         headers: {
-            'Access-Control-Allow-Origin': '*'
-        }
+            'Access-Control-Allow-Origin': '*',
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+        body: JSON.stringify({
+            user: {
+                userId: userId
+            }
+        }),
     })
         .then(response => response.json())
 }
 
 export const taskApiPost = (data : object) => {
-    fetch(`${config.apiAdress}/api/tasks`, {
+    fetch(`${config.apiAdress}/api/tasks/create`, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
