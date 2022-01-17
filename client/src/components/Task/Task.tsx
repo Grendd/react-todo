@@ -25,9 +25,18 @@ export interface TaskWrapperProps extends TaskProps {
     addSubTask: (tasks: StateTask[], id: string) => void;
     task: FullStateTask
 }
+
+//Tue Nov 16 2021 20:37:35 GMT+0300 (Moscow Standard Time)
 const Task = ({index, showMarked, removeTask, task, className} : TaskProps) => {
+    const dateConverter = (text: string) => {
+        const dateSplitted = text.split(' ')
+        return `${dateSplitted[2]} ${dateSplitted[1]} ${dateSplitted[3].slice(2)}`
+    }
     return (
         <div className={className ? `task ${className}` : "task"}>
+            {!className && (
+                <p className="date">{dateConverter(task.id)}</p>
+            )}
             <input className="task_checker"
                    id={`${className ? 'sub' : ''}task_checker-${task.taskName}-${index}`}
                    type="checkbox"
