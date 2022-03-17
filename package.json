@@ -34,12 +34,12 @@
   },
   "scripts": {
     "dev-all": "concurrently \"npm run server-dev\" \"npm run client-dev\"",
-    "client-dev": "npm run start --prefix client",
-    "build": "react-scripts build",
+    "client-dev": "react-scripts start",
+    "client-build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server-test": "node server/app/index.js",
-    "server-dev": "nodemon server/app/index.js"
+    "server-test": "node server/index.js",
+    "server-dev": "nodemon server/index.js"
   },
   "eslintConfig": {
     "extends": [
