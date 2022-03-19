@@ -1,6 +1,6 @@
 import React, {ChangeEvent, FormEvent, useContext, useState} from "react";
 import {registerApi, loginApi} from "../../api/authApi";
-import Error from "../Error/Error";
+import Error from "../Error";
 import Tooltip from "../Tooltip/Tooltip";
 import {FormType, AuthTypes} from "../../types";
 
@@ -62,11 +62,13 @@ const AuthForm = ({setIsLogined, authType, setAuthType}: AuthFormProps) => {
 		}
 		setForm({email: "", password: ""});
 	};
+
 	const onChangeInput = (form: FormType, onChange: (data: FormType) => void) => {
 		return (e: ChangeEvent<HTMLInputElement>) => {
 			onChange({...form, [e.target.name]: e.target.value});
 		};
 	};
+    
 	return (
 		<form onSubmit={onSubmit} onClick={e => e.stopPropagation()} className={"auth-form"}>
 			<AuthInput onChange={onChangeInput(form, setForm)} value={form.email} placeholder={"Login"}/>

@@ -1,10 +1,10 @@
 import {createContext} from "react";
 
 export const ToDoContext = createContext({
-    filter: 'all'
+	filter: "all"
 });
 
-function noop () {}
+function noop () {return;}
 
 interface AppContextType {
     token: string | null;
@@ -15,9 +15,9 @@ interface AppContextType {
 }
 
 export const AppContext = createContext<AppContextType>({
-  token: null,
-  userId: null,
-  login: noop,
-  logout: noop,
-  isAuthenticated: false
-})
+	token: null,
+	userId: null,
+	login: noop,
+	logout: noop,
+	isAuthenticated: false
+});
