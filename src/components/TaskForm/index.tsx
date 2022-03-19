@@ -20,7 +20,7 @@ const TaskForm = ({inputValue, onSubmit, onChange, className}: TaskFormProps) =>
 				onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e.currentTarget.value)}
 				value={inputValue}
 				placeholder={className === "subtaskInput" ? "Enter subtask:" : "What need to be done?"}
-				maxLength={18}
+				maxLength={60}
 			/>
 			{/*<input id="file_input" type="file" onChange={() => console.log(this.files)}/>*/}
 		</form>
