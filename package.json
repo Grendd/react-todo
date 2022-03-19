@@ -37,13 +37,13 @@
     "sass": "^1.49.9"
   },
   "scripts": {
-    "dev-all": "concurrently \"npm run server-dev\" \"npm run client-dev\"",
-    "dev": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "dev": "react-scripts start",
+    "server-build": "forever start server/index.js",
+    "server-dev": "nodemon server/index.js",
     "server-test": "node server/index.js",
-    "server-dev": "nodemon server/index.js"
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
