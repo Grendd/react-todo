@@ -15,7 +15,7 @@ app.use("/api", router);
 
 async function startApp() {
 	try {
-		await mongoose.connect(url,  { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true });
+		await mongoose.connect(url, {useUnifiedTopology: true, useNewUrlParser: true});
 		app.listen(PORT, () => console.log("Server started on port: " + PORT));
 	} catch (e) {
 		console.log(e);
