@@ -10,12 +10,14 @@
   position: relative;
 
   button{
+    cursor: pointer;
     background: none;
     border: 1px solid transparent;
     border-radius: 3px;
     padding: 3px 7px;
     text-decoration: none;
     line-height: 1.4em;
+    font-size: 1rem;
   }
   button:hover{
     span {

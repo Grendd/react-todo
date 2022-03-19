@@ -64,28 +64,29 @@ const ToDos = () => {
     }, [userId])
     return (
         <ToDoContext.Provider value={{ filter: filterValue}}>
-            <TaskForm
-                onSubmit={addTask}
-                inputValue={inputValue}
-                className={'taskInput'}
-                onChange={setInputValue}
-            />
-            <div className="tasks">
-                {tasks.filter(filteringTasks).map((task, index) => {
-                    return (
-                        <TaskWrapper
-                            task={task}
-                            index={index}
-                            key={task.taskName + index}
-                            showMarked={changeStatus.bind(this, task)}
-                            removeTask={removeTask.bind(this, task)}
-                            addSubTask={addSubTask}
-                        />
-                    );
-                })}
+            <div className="todos">
+                <TaskForm
+                    onSubmit={addTask}
+                    inputValue={inputValue}
+                    className={'taskInput'}
+                    onChange={setInputValue}
+                />
+                <div className="tasks">
+                    {tasks.filter(filteringTasks).map((task, index) => {
+                        return (
+                            <TaskWrapper
+                                task={task}
+                                index={index}
+                                key={task.taskName + index}
+                                showMarked={changeStatus.bind(this, task)}
+                                removeTask={removeTask.bind(this, task)}
+                                addSubTask={addSubTask}
+                            />
+                        );
+                    })}
+                </div>
+                <FilterGroup onClick={setFilterValue} currStatus={filterValue}/>
             </div>
-
-            <FilterGroup onClick={setFilterValue} currStatus={filterValue}/>
         </ToDoContext.Provider>
     )
 }

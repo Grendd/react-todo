@@ -3,6 +3,7 @@ import ToDos from "../Todos/Todos"
 import {AppContext} from '../../context'
 import {useAuth} from "../../hooks/auth";
 import SignInOrUp from "../Authorization/Authorization";
+import Layout, {Header, Main, Footer, Box} from "./Layout";
 
 import './App.scss'
 
@@ -17,11 +18,17 @@ const App = () => {
         <AppContext.Provider value={{
               token, login, logout, userId, isAuthenticated
             }}>
-            <div className="app">
-                <h1 className="header">toDos</h1>
-                {isLogined ? <ToDos /> : <SignInOrUp setIsLogined={setIsLogined} />}
-                <footer className="footer">Created by <a href="http://github.com/grendd">grendd</a> | 2021</footer>
-            </div>
+            <Layout>
+                <Header>
+                    <a href="/"><h1>toDos</h1></a>
+                </Header>
+                <Main>
+                    <Box>
+                        {isLogined ? <ToDos /> : <SignInOrUp setIsLogined={setIsLogined} />}
+                    </Box>
+                </Main>
+                <Footer>Created by <a href="http://github.com/grendd">grendd</a> | 2021</Footer>
+            </Layout>
         </AppContext.Provider>
     );
 }

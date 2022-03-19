@@ -1,0 +1,19 @@
+.tooltip__wrapper .tooltip { /* Внешний вид нашего тултипа */
+	background-color: rgba(0,0,0, 0.8);
+	border-radius: 15px 15px 15px 0px;
+	box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+	color: #fff;
+    font-size: 1rem;
+	opacity: 0; /* Делаем его прозрачным */
+	padding: 10px;
+	position: absolute;
+	text-decoration: none;
+	visibility: hidden; /* И прячем */
+	width: 200px;
+	z-index: 10;
+}
+		
+.tooltip__wrapper:hover .tooltip { /* По hover отображаем тултип */
+	opacity: 1;
+	visibility: visible;
+}

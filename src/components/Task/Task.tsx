@@ -26,7 +26,6 @@ export interface TaskWrapperProps extends TaskProps {
     task: FullStateTask
 }
 
-//Tue Nov 16 2021 20:37:35 GMT+0300 (Moscow Standard Time)
 const Task = ({index, showMarked, removeTask, task, className} : TaskProps) => {
     const dateConverter = (text: string) => {
         const dateSplitted = text.split(' ')

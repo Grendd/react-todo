@@ -2,31 +2,18 @@
   margin: 0;
   padding: 0;
 }
-body{
+body {
   width: 100vw;
   height: 100vh;
-  font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font: 10px 'Helvetica Neue', Helvetica, Arial, sans-serif;
   background-color: #f5f5f5;
   font-weight: 300;
 }
 #root{
+  height: 100%;
+  width: 100%;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
-#file_input{
-  border: none;
-}
-.header{
-  font-size: 6rem;
-  color: rgba(175, 47, 47, 0.15);
-  font-weight: 100;
-
-}
-footer{
-  margin-top: 10px;
-  font-size: 1rem;
-}
-
