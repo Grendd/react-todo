@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./Tooltip.scss";
+import "./styles.scss";
 
 interface TooltipProps {
     text: string;
