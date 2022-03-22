@@ -1,6 +1,6 @@
 import config from "../config/default";
 
-import {StateTask, FullStateTask} from "../types";
+import {FullStateTask} from "../types";
 
 export const taskApiGetAll = (userId: string | null): Promise<FullStateTask[]> => fetch(`${config.apiAdress}/api/tasks`, {
 	method: "POST",
