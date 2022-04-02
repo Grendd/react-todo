@@ -3,7 +3,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import config from "config";
 import {url} from "./db.js";
-import router from "./routes/index.js";
+import router from "./src/routes/index.js";
 
 const PORT = config.get("port") || 5000;
 
