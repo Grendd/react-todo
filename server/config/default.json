@@ -1,0 +1,6 @@
+{
+  "port": 5000,
+  "JWtoken": "token",
+  "mongoUri": "mongodbURL",
+  "baseUrl": "http://localhost:5000"
+}

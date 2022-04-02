@@ -1,0 +1,141 @@
+@keyframes opening {
+  0% {
+    max-height: 65px;
+  }
+  100% {
+    max-height: 1000px;
+  }
+}
+@keyframes closing {
+  0% {
+    max-height: 1000px;
+  }
+  100% {
+    max-height: 65px;
+  }
+}
+.opened {
+  animation-name: opening;
+}
+.closed {
+  animation-name: closing;
+}
+
+@media (max-width: 500px) {
+  .task {
+    font-size: 1.5rem !important;
+  }
+  .destroy{
+    visibility: visible !important;
+  }
+  .subtask {
+    margin: 0 !important;
+  }
+}
+@media (min-width: 800px) {
+  .task {
+    font-size: 2rem !important;
+  }
+}
+
+.date {
+  font-size: 0.8rem;
+  padding: 0 5px;
+}
+
+.subtasks {
+  margin-left: 15px;
+}
+
+.subtask {
+  font-size: 1rem !important;
+  margin-left: 100px;
+}
+
+.task {
+  font-size: 2rem;
+  display: flex;
+  position: relative;
+  cursor: pointer;
+  
+  label{
+    padding: 15px 0;
+  }
+
+  p{
+    display: inline-flex;
+    align-items: center;
+    line-height: 1.2;
+    font-weight: 300;
+  }
+
+  &_wrapper {
+    border-bottom: 1px solid #ededed;
+    background-color: white;
+    overflow: hidden;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+  }
+  &:hover .destroy{
+    visibility: visible;
+  }
+
+  &_checker{
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+    &+label{
+      display: inline-flex;
+      align-items: center;
+      user-select: none;
+    }
+  }
+  &_checker+label::before {
+    content: '';
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+    flex-grow: 0;
+    border: 1px solid #adb5bd;
+    border-radius: 0.25em;
+    margin-right: 0.5em;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 50% 50%;
+  }
+  &_checker:checked+label::before {
+    border-color: #0b76ef;
+    background-color: #0b76ef;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
+  }
+}
+
+.destroy{
+  visibility: hidden;
+  width: 30px;
+  height: 30px;
+  margin: 5px 5px;
+  font-size: 30px;
+  color: #cc9a9a;
+  transition: color 0.2s ease-out;
+  border: none;
+  background-color: white;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+
+  &:hover {
+      color: #af5b5e;
+    }
+  &:after {
+    content: 'x';
+  }
+}
+.subtaskInput {
+  padding: 16px 100px 16px 100px;
+}
+
+
